@@ -23,6 +23,7 @@ const Mahasiswa = () => {
       const dummyData = [
         { nim: "A11.2022.14640", nama: "Octaviana Sholikhah", status: true },
         { nim: "A11.2022.14641", nama: "Tugasku", status: false },
+        { nim: "A11.2022.14642", nama: "Harry", status: false },
       ];
       setMahasiswa(dummyData);
       localStorage.setItem("mahasiswa", JSON.stringify(dummyData));

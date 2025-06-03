@@ -29,6 +29,17 @@ const Sidebar = () => {
         >
         🎓 Mahasiswa
         </NavLink>
+
+         <NavLink
+          to="/admin/dosen"
+          className={({ isActive }) =>
+            isActive
+              ? "flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded"
+              : "flex items-center gap-2 hover:bg-blue-500 hover:text-white px-4 py-2 rounded"
+          }
+        >
+        👨‍🏫 Dosen
+        </NavLink>
       </nav>
     </aside>
   );

@@ -1,7 +1,7 @@
-// LOGIN PAGE (Login.js) => src/pages/Login.js
+// src/pages/Login.js
 
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Label from "../components/atoms/Label";
 import Input from "../components/atoms/Input";
 import Button from "../components/atoms/Button";
@@ -17,7 +17,6 @@ const Login = () => {
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    // Cek apakah sesuai dengan dummy user
     if (email === user.email && password === user.password) {
       localStorage.setItem("isLoggedIn", "true");
       toast.success("Login Berhasil! ✅", {
@@ -26,7 +25,7 @@ const Login = () => {
       });
       setTimeout(() => {
         navigate("/admin");
-      }, 3000); // navigasi setelah toast selesai tampil
+      }, 3000);
     } else {
       toast.error("Email atau password salah ❌", {
         position: "top-center",
@@ -54,7 +53,13 @@ const Login = () => {
         </Button>
       </form>
 
-      {/* Container untuk menampilkan Toast */}
+      <p className="text-center mt-4">
+        Belum punya akun?{" "}
+        <Link to="/register" className="text-blue-600 underline">
+          Daftar di sini
+        </Link>
+      </p>
+
       <ToastContainer />
     </>
   );

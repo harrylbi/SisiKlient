@@ -5,7 +5,6 @@ export const MahasiswaContext = createContext();
 export const MahasiswaProvider = ({ children }) => {
   const [mahasiswa, setMahasiswa] = useState([]);
 
-  // Fungsi untuk load data dari localStorage
   const loadMahasiswa = () => {
     const data = localStorage.getItem("mahasiswa");
     if (!data) {
