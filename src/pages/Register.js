@@ -4,12 +4,14 @@ import Label from "../components/atoms/Label";
 import Input from "../components/atoms/Input";
 import Button from "../components/atoms/Button";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "../axios"; 
+
 import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const navigate = useNavigate();
 
-  const handleRegister = (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
@@ -22,17 +24,27 @@ const Register = () => {
       return;
     }
 
-    const userData = { email, password };
-    localStorage.setItem("user", JSON.stringify(userData));
+    try {
+      // Simulasikan request registrasi
+      await axios.post("/register", { email, password });
 
-    toast.success("Registrasi berhasil! ✅", {
-      position: "top-center",
-      autoClose: 3000,
-    });
+      const userData = { email, password };
+      localStorage.setItem("user", JSON.stringify(userData));
 
-    setTimeout(() => {
-      navigate("/login");
-    }, 3000);
+      toast.success("Registrasi berhasil! ✅", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    } catch (error) {
+      toast.error("Gagal registrasi ❌", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+    }
   };
 
   return (

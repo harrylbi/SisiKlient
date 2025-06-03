@@ -3,28 +3,38 @@ import { useNavigate, Link } from "react-router-dom";
 import Label from "../components/atoms/Label";
 import Input from "../components/atoms/Input";
 import Button from "../components/atoms/Button";
-import user from "../data/user";
 import { ToastContainer, toast } from "react-toastify";
+import axios from "../axios"; 
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    if (email === user.email && password === user.password) {
-      localStorage.setItem("isLoggedIn", "true");
-      toast.success("Login Berhasil! ✅", {
-        position: "top-center",
-        autoClose: 3000,
-      });
-      setTimeout(() => {
-        navigate("/admin");
-      }, 3000);
-    } else {
+    try {
+      await axios.post("/login", { email, password });
+
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (storedUser && email === storedUser.email && password === storedUser.password) {
+        localStorage.setItem("isLoggedIn", "true");
+
+        toast.success("Login Berhasil! ✅", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+
+        setTimeout(() => {
+          navigate("/admin");
+        }, 3000);
+      } else {
+        throw new Error("Invalid credentials");
+      }
+    } catch (error) {
       toast.error("Email atau password salah ❌", {
         position: "top-center",
         autoClose: 3000,
