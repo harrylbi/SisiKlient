@@ -22,7 +22,6 @@ const Register = () => {
       return;
     }
 
-    // Simpan user ke localStorage (dummy)
     const userData = { email, password };
     localStorage.setItem("user", JSON.stringify(userData));
 
@@ -38,19 +37,37 @@ const Register = () => {
 
   return (
     <>
-      <h2 className="text-3xl font-semibold text-center text-green-600 mb-6">
+      <h2 className="text-4xl font-extrabold text-center text-pink-400 uppercase mb-6 border-b-4 border-pink-400 pb-2">
         Register
       </h2>
-      <form onSubmit={handleRegister} className="space-y-4">
+
+      <form onSubmit={handleRegister} className="space-y-6">
         <div>
-          <Label htmlFor="email">Email</Label>
-          <Input type="email" id="email" name="email" placeholder="Masukkan email" required />
+          <Label htmlFor="email" className="text-white uppercase">Email</Label>
+          <Input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="contoh@email.com"
+            required
+            className="bg-pink-100 border-4 border-black text-black placeholder:text-gray-700"
+          />
         </div>
         <div>
-          <Label htmlFor="password">Password</Label>
-          <Input type="password" id="password" name="password" placeholder="Masukkan password" required />
+          <Label htmlFor="password" className="text-white uppercase">Password</Label>
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="********"
+            required
+            className="bg-pink-100 border-4 border-black text-black placeholder:text-gray-700"
+          />
         </div>
-        <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+        <Button
+          type="submit"
+          className="w-full bg-green-700 hover:bg-green-800 border-4 border-black text-white uppercase font-bold text-lg py-3"
+        >
           Register
         </Button>
       </form>

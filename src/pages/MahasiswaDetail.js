@@ -1,5 +1,3 @@
-// MahasiswaDetail.js => src/pages/MahasiswaDetail.js
-
 import React from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/atoms/Button";
@@ -12,41 +10,45 @@ const MahasiswaDetail = () => {
   const data = state;
 
   return (
-    <div className="bg-white max-w-lg mx-auto mt-10 p-6 shadow-lg rounded-xl">
-      <h1 className="text-3xl font-bold mb-6 text-blue-700">Detail Mahasiswa</h1>
+    <div className="bg-yellow-100 border-4 border-black max-w-xl mx-auto mt-10 p-8">
+      <h1 className="text-4xl font-extrabold mb-6 text-black underline">
+        DETAIL MAHASISWA
+      </h1>
 
       {data ? (
-        <div className="space-y-4 text-gray-800 text-base">
+        <div className="space-y-6 text-black text-lg font-mono">
           <div>
-            <span className="font-semibold text-gray-600">NIM:</span>
-            <div className="bg-gray-100 px-4 py-2 rounded">{data.nim}</div>
+            <div className="font-bold uppercase mb-1">NIM:</div>
+            <div className="border-2 border-black bg-white px-4 py-2">{data.nim}</div>
           </div>
 
           <div>
-            <span className="font-semibold text-gray-600">Nama:</span>
-            <div className="bg-gray-100 px-4 py-2 rounded">{data.nama}</div>
+            <div className="font-bold uppercase mb-1">Nama:</div>
+            <div className="border-2 border-black bg-white px-4 py-2">{data.nama}</div>
           </div>
 
           <div>
-            <span className="font-semibold text-gray-600">Status:</span>
+            <div className="font-bold uppercase mb-1">Status:</div>
             <div
-              className={`px-4 py-2 rounded ${
-                data.status ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+              className={`border-2 px-4 py-2 font-bold ${
+                data.status
+                  ? "bg-green-400 border-black text-black"
+                  : "bg-red-400 border-black text-black"
               }`}
             >
-              {data.status ? "Aktif" : "Tidak Aktif"}
+              {data.status ? "AKTIF" : "TIDAK AKTIF"}
             </div>
           </div>
         </div>
       ) : (
-        <div className="text-red-600 font-medium">
-          Data mahasiswa tidak tersedia atau tidak dikirim 😥
+        <div className="text-red-800 font-extrabold border-4 border-black p-4 bg-white mt-4">
+          ❌ DATA MAHASISWA TIDAK TERSEDIA
         </div>
       )}
 
-      <div className="mt-6">
+      <div className="mt-10">
         <Button
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-black text-white hover:bg-white hover:text-black hover:border hover:border-black px-6 py-3 uppercase font-bold"
           onClick={() => navigate("/admin/mahasiswa")}
         >
           ← Kembali ke Daftar Mahasiswa

@@ -1,52 +1,28 @@
+// MODAL COMPONENT (Modal.js)  ==> src/components/molecules/Modal.js
+
 import React from "react";
 
-const Card = ({ title, value, icon, color = "blue", colSpan, className = "" }) => {
-  // Define color classes based on the color prop
-  const colorClasses = {
-    blue: {
-      bg: "bg-blue-100",
-      text: "text-blue-800",
-    },
-    green: {
-      bg: "bg-green-100",
-      text: "text-green-800",
-    },
-    orange: {
-      bg: "bg-orange-100",
-      text: "text-orange-800",
-    },
-    red: {
-      bg: "bg-red-100",
-      text: "text-red-800",
-    },
-    purple: {
-      bg: "bg-purple-100",
-      text: "text-purple-800",
-    },
-  };
-
-  const { bg, text } = colorClasses[color] || colorClasses.blue;
-
-  // Mapping colSpan ke class Tailwind grid column span
-  // colSpan bisa berupa number (1,2,3...) atau string 'full'
-  let colSpanClass = "";
-  if (colSpan) {
-    if (colSpan === "full") {
-      colSpanClass = "col-span-full";
-    } else if (typeof colSpan === "number") {
-      colSpanClass = `col-span-${colSpan}`;
-    }
-  }
-
+const Modal = ({ isOpen, onClose, children }) => {
+  if (!isOpen) return null;
   return (
-    <div className={`${bg} p-4 rounded-lg shadow ${colSpanClass} ${className}`}>
-      <div className="flex items-center justify-between mb-2">
-        <h3 className={`font-medium ${text}`}>{title}</h3>
-        {icon && <span className="text-2xl">{icon}</span>}
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-4">
+        {/* Header Modal */}
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-semibold">Edit Mahasiswa</h2>
+          <button
+            className="text-gray-600 hover:text-red-500 text-2xl"
+            onClick={onClose}
+          >
+            &times;
+          </button>
+        </div>
+
+        {/* Isi Modal */}
+        {children}
       </div>
-      <p className="text-2xl font-bold">{value}</p>
     </div>
   );
 };
 
-export default Card;
+export default Modal;

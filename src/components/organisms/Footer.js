@@ -1,11 +1,14 @@
-// FOOTER COMPONENT (Footer.js)  ==> src/components/organisms/Footer.js
-
 import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-center py-4 shadow-inner">
-      <p className="text-sm text-gray-600">© 2025 Admin Dashboard. All rights reserved.</p>
+    <footer className="bg-yellow-300 border-t-4 border-black text-center py-4">
+      <p
+        className="text-black font-mono text-sm uppercase tracking-widest"
+        style={{ fontWeight: "800" }}
+      >
+        © 2025 Admin Dashboard. All rights reserved.
+      </p>
     </footer>
   );
 };

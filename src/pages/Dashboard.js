@@ -22,28 +22,26 @@ const Dashboard = () => {
   const dosenBaru = dosen.filter((d) => d.nidn.startsWith("2022")).length;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       {/* Mahasiswa Section */}
-      <div className="bg-white shadow rounded-lg p-4">
-        <h2 className="text-lg font-semibold mb-4">Data Mahasiswa</h2>
+      <div className="bg-yellow-100 border-4 border-black p-6 shadow-none">
+        <h2 className="text-2xl font-extrabold uppercase mb-6 border-b-4 border-black pb-2 text-black">
+          Data Mahasiswa
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card title="Total Mahasiswa" value={totalMahasiswa} icon="🎓" color="blue" />
           <Card title="Aktif" value={aktifMahasiswa} icon="✅" color="green" />
           <Card title="Non-Aktif" value={nonAktifMahasiswa} icon="❌" color="red" />
           <Card title="Mahasiswa Baru" value={mahasiswaBaru} icon="🆕" color="purple" />
-          <Card
-            title="Statistik Kelulusan"
-            value="0%"
-            icon="📊"
-            color="orange"
-            className="h-32"
-          />
+          <Card title="Statistik Kelulusan" value="0%" icon="📊" color="orange" />
         </div>
       </div>
 
       {/* Dosen Section */}
-      <div className="bg-white shadow rounded-lg p-4">
-        <h2 className="text-lg font-semibold mb-4">Data Dosen</h2>
+      <div className="bg-pink-100 border-4 border-black p-6 shadow-none">
+        <h2 className="text-2xl font-extrabold uppercase mb-6 border-b-4 border-black pb-2 text-black">
+          Data Dosen
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card title="Total Dosen" value={totalDosen} icon="👨‍🏫" color="blue" />
           <Card title="Aktif" value={aktifDosen} icon="✅" color="green" />

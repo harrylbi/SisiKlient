@@ -1,44 +1,44 @@
-// SIDEBAR COMPONENT (Sidebar.js)  ==> src/components/organisms/Sidebar.js
-
 import React from "react";
 import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <aside className="w-64 bg-blue-800 text-white p-4">
-      <h2 className="text-2xl font-bold mb-8 text-white">Admin Panel</h2>
-    <nav className="flex flex-col gap-2">
+    <aside className="w-64 bg-yellow-300 border-r-8 border-black p-6">
+      <h2 className="text-3xl font-extrabold mb-10 text-black uppercase tracking-wide border-b-4 border-black pb-2">
+        Admin Panel
+      </h2>
+      <nav className="flex flex-col gap-4">
         <NavLink
           to="/admin/dashboard"
           className={({ isActive }) =>
             isActive
-              ? "flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded"
-              : "flex items-center gap-2 hover:bg-blue-500 hover:text-white px-4 py-2 rounded"
+              ? "flex items-center gap-3 bg-black text-yellow-300 px-5 py-3 border-4 border-black font-bold uppercase"
+              : "flex items-center gap-3 hover:bg-black hover:text-yellow-300 px-5 py-3 border-4 border-transparent font-bold uppercase transition-colors duration-200"
           }
         >
-        🏠 Dashboard
+          🏠 Dashboard
         </NavLink>
 
         <NavLink
           to="/admin/mahasiswa"
           className={({ isActive }) =>
             isActive
-              ? "flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded"
-              : "flex items-center gap-2 hover:bg-blue-500 hover:text-white px-4 py-2 rounded"
+              ? "flex items-center gap-3 bg-black text-yellow-300 px-5 py-3 border-4 border-black font-bold uppercase"
+              : "flex items-center gap-3 hover:bg-black hover:text-yellow-300 px-5 py-3 border-4 border-transparent font-bold uppercase transition-colors duration-200"
           }
         >
-        🎓 Mahasiswa
+          🎓 Mahasiswa
         </NavLink>
 
-         <NavLink
+        <NavLink
           to="/admin/dosen"
           className={({ isActive }) =>
             isActive
-              ? "flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded"
-              : "flex items-center gap-2 hover:bg-blue-500 hover:text-white px-4 py-2 rounded"
+              ? "flex items-center gap-3 bg-black text-yellow-300 px-5 py-3 border-4 border-black font-bold uppercase"
+              : "flex items-center gap-3 hover:bg-black hover:text-yellow-300 px-5 py-3 border-4 border-transparent font-bold uppercase transition-colors duration-200"
           }
         >
-        👨‍🏫 Dosen
+          👨‍🏫 Dosen
         </NavLink>
       </nav>
     </aside>
