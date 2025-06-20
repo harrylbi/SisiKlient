@@ -1,0 +1,43 @@
+{
+  "mahasiswa": [
+    {
+      "id": "19c5d151-7691-4db2-8ae5-5bb5963969d0",
+      "nim": "1284814",
+      "nama": "rheno",
+      "status": true
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "Admin 1",
+      "email": "admin@mail.com",
+      "password": "admin123",
+      "role": "admin",
+      "permissions": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Mahasiswa 1",
+      "email": "mahasiswa@mail.com",
+      "password": "mahasiswa123",
+      "role": "user",
+      "permissions": [
+        "read"
+      ]
+    }
+  ],
+  "dosen": [
+    {
+      "id": "37891286-7538-4bf5-95fa-4cc54a064f25",
+      "nidn": "149u",
+      "nama": "af"
+    }
+  ],
+  "matakuliah": []
+}
