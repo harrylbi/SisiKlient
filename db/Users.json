@@ -1,0 +1,28 @@
+[
+  {
+    "id": "1",
+    "name": "Admin 1",
+    "email": "admin@mail.com",
+    "password": "admin123",
+    "role": "admin",
+    "permissions": ["create", "read", "update", "delete"]
+  },
+  {
+    "id": "2",
+    "name": "Mahasiswa 1",
+    "email": "mahasiswa@mail.com",
+    "password": "mahasiswa123",
+    "role": "user",
+    "permissions": ["read", "create"]
+  },
+
+ {
+    "id": "3",
+    "name": "Siti Aminah",
+    "email": "aminah@gmail.com",
+    "password": "mahasiswa123",
+    "role": "user",
+    "permissions": ["read", "create"],
+    "mahasiswaId": "mhs-2"
+  }
+]

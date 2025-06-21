@@ -1,0 +1,16 @@
+[
+  {
+    "id": "mhs-1",
+    "nim": "12345678",
+    "nama": "Budi Santoso",
+    "status": true,
+    "maxSks": 24
+  },
+  {
+    "id": "mhs-2",
+    "nim": "87654321",
+    "nama": "Siti Aminah",
+    "status": true,
+    "maxSks": 24
+  }
+]

@@ -10,7 +10,7 @@ const KRS = () => {
     <div className="p-6 bg-white rounded-lg shadow">
       <h1 className="text-2xl font-bold mb-4">Kartu Rencana Studi (KRS)</h1>
       <p className="text-gray-700">
-        Selamat datang, {user?.name || "Mahasiswa"}! Ini adalah halaman KRS kamu.
+        Selamat datang, {user?.name || "Mahasiswa"}! Ini adalah halaman KRS kamu bang.
       </p>
       {/* Kamu bisa tambahkan daftar mata kuliah di sini */}
     </div>

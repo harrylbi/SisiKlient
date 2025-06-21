@@ -15,30 +15,31 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsLoading(true);
 
-    try {
-      const user = await authLogin(form.email, form.password); // panggil context login
-      toast.success("Login berhasil!");
+  try {
+    const user = await authLogin(form.email, form.password);
+    toast.success("Login berhasil!");
 
-      setTimeout(() => {
-        // Arahkan user sesuai role
-        if (user.role === "admin") {
-          navigate("/admin/dashboard");
-        } else if (user.role === "user" || user.role === "mahasiswa") {
-          navigate("/user/krs");
-        } else {
-          navigate("/unauthorized"); // fallback jika role aneh
-        }
-      }, 1500);
-    } catch (err) {
-      toast.error(err.message || "Login gagal");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    setTimeout(() => {
+      // ✅ Arahkan sesuai role dan sesuai struktur route App.js
+      if (user.role === "admin") {
+        navigate("/dashboard/home");
+      } else if (user.role === "user" || user.role === "mahasiswa") {
+        navigate("/dashboard/krs");
+      } else {
+        navigate("/unauthorized");
+      }
+    }, 1500);
+  } catch (err) {
+    toast.error(err.message || "Login gagal");
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "mk-11",
+    "kode": "IF011",
+    "nama": "Keamanan Jaringan",
+    "sks": 3
+  },
+  {
+    "id": "mk-12",
+    "kode": "IF012",
+    "nama": "Etika Profesi TI",
+    "sks": 2
+  },
+  {
+    "id": "mk-13",
+    "kode": "IF013",
+    "nama": "Data Mining",
+    "sks": 3
+  },
+  {
+    "id": "mk-14",
+    "kode": "IF014",
+    "nama": "Cloud Computing",
+    "sks": 3
+  },
+  {
+    "id": "mk-15",
+    "kode": "IF015",
+    "nama": "Pengolahan Citra Digital",
+    "sks": 3
+  },
+  {
+    "id": "mk-16",
+    "kode": "IF016",
+    "nama": "Internet of Things",
+    "sks": 3
+  },
+  {
+    "id": "mk-17",
+    "kode": "IF017",
+    "nama": "Manajemen Basis Data",
+    "sks": 2
+  },
+  {
+    "id": "mk-18",
+    "kode": "IF018",
+    "nama": "Pemrograman Berbasis Objek",
+    "sks": 4
+  },
+  {
+    "id": "mk-19",
+    "kode": "IF019",
+    "nama": "Analisis dan Perancangan Sistem",
+    "sks": 3
+  },
+  {
+    "id": "mk-20",
+    "kode": "IF020",
+    "nama": "Pemrograman Game",
+    "sks": 3
+  }
+]

@@ -1,10 +1,162 @@
 {
+  "dosen": [
+    {
+      "id": "dsn-3",
+      "nidn": "00778899",
+      "nama": "Dr. Budi Hartono",
+      "email": "budi.hartono@dosen.com",
+      "maxSks": 12
+    },
+    {
+      "id": "dsn-4",
+      "nidn": "00110022",
+      "nama": "Dr. Lestari Dewi",
+      "email": "lestari@dosen.com",
+      "maxSks": 9
+    },
+    {
+      "id": "dsn-5",
+      "nidn": "00223344",
+      "nama": "Prof. Ahmad Fauzi",
+      "email": "ahmad@dosen.com",
+      "maxSks": 15
+    },
+    {
+      "id": "dsn-6",
+      "nidn": "00334455",
+      "nama": "Dr. Suryani",
+      "email": "suryani@dosen.com",
+      "maxSks": 12
+    },
+    {
+      "id": "dsn-7",
+      "nidn": "00556677",
+      "nama": "Dr. Eko Prasetyo",
+      "email": "eko@dosen.com",
+      "maxSks": 12
+    },
+    {
+      "id": "dsn-8",
+      "nidn": "00667788",
+      "nama": "Prof. Diah Retno",
+      "email": "diah@dosen.com",
+      "maxSks": 15
+    },
+    {
+      "id": "dsn-9",
+      "nidn": "00990011",
+      "nama": "Dr. Rudi Santosa",
+      "email": "rudi@dosen.com",
+      "maxSks": 9
+    },
+    {
+      "id": "dsn-10",
+      "nidn": "00881122",
+      "nama": "Dr. Hana Lestari",
+      "email": "hana@dosen.com",
+      "maxSks": 12
+    },
+    {
+      "id": "dsn-11",
+      "nidn": "01010101",
+      "nama": "Dr. Wahyu Nugroho",
+      "email": "wahyu@dosen.com",
+      "maxSks": 9
+    },
+    {
+      "id": "dsn-12",
+      "nidn": "01234567",
+      "nama": "Prof. Indah Permatasari",
+      "email": "indah@dosen.com",
+      "maxSks": 15
+    }
+  ],
+  "kelas": [
+    {
+      "id": "kelas-1750522958080",
+      "matakuliahId": "mk-11",
+      "dosenId": "dsn-3",
+      "mahasiswaIds": [
+        "mhs-2"
+      ]
+    }
+  ],
   "mahasiswa": [
     {
-      "id": "19c5d151-7691-4db2-8ae5-5bb5963969d0",
-      "nim": "1284814",
-      "nama": "rheno",
-      "status": true
+      "id": "mhs-1",
+      "nim": "12345678",
+      "nama": "Budi Santoso",
+      "status": true,
+      "maxSks": 24
+    },
+    {
+      "id": "mhs-2",
+      "nim": "87654321",
+      "nama": "Siti Aminah",
+      "status": true,
+      "maxSks": 24
+    }
+  ],
+  "matakuliah": [
+    {
+      "id": "mk-11",
+      "kode": "IF011",
+      "nama": "Keamanan Jaringan",
+      "sks": 3
+    },
+    {
+      "id": "mk-12",
+      "kode": "IF012",
+      "nama": "Etika Profesi TI",
+      "sks": 2
+    },
+    {
+      "id": "mk-13",
+      "kode": "IF013",
+      "nama": "Data Mining",
+      "sks": 3
+    },
+    {
+      "id": "mk-14",
+      "kode": "IF014",
+      "nama": "Cloud Computing",
+      "sks": 3
+    },
+    {
+      "id": "mk-15",
+      "kode": "IF015",
+      "nama": "Pengolahan Citra Digital",
+      "sks": 3
+    },
+    {
+      "id": "mk-16",
+      "kode": "IF016",
+      "nama": "Internet of Things",
+      "sks": 3
+    },
+    {
+      "id": "mk-17",
+      "kode": "IF017",
+      "nama": "Manajemen Basis Data",
+      "sks": 2
+    },
+    {
+      "id": "mk-18",
+      "kode": "IF018",
+      "nama": "Pemrograman Berbasis Objek",
+      "sks": 4
+    },
+    {
+      "id": "mk-19",
+      "kode": "IF019",
+      "nama": "Analisis dan Perancangan Sistem",
+      "sks": 3
+    },
+    {
+      "id": "mk-20",
+      "kode": "IF020",
+      "nama": "Pemrograman Game",
+      "sks": 3
     }
   ],
   "users": [
@@ -28,16 +180,21 @@
       "password": "mahasiswa123",
       "role": "user",
       "permissions": [
-        "read"
+        "read",
+        "create"
       ]
-    }
-  ],
-  "dosen": [
+    },
     {
-      "id": "37891286-7538-4bf5-95fa-4cc54a064f25",
-      "nidn": "149u",
-      "nama": "af"
+      "id": "3",
+      "name": "Siti Aminah",
+      "email": "aminah@gmail.com",
+      "password": "mahasiswa123",
+      "role": "user",
+      "permissions": [
+        "read",
+        "create"
+      ],
+      "mahasiswaId": "mhs-2"
     }
-  ],
-  "matakuliah": []
+  ]
 }

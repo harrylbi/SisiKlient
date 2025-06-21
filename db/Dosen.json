@@ -1,0 +1,72 @@
+[
+  {
+    "id": "dsn-3",
+    "nidn": "00778899",
+    "nama": "Dr. Budi Hartono",
+    "email": "budi.hartono@dosen.com",
+    "maxSks": 12
+  },
+  {
+    "id": "dsn-4",
+    "nidn": "00110022",
+    "nama": "Dr. Lestari Dewi",
+    "email": "lestari@dosen.com",
+    "maxSks": 9
+  },
+  {
+    "id": "dsn-5",
+    "nidn": "00223344",
+    "nama": "Prof. Ahmad Fauzi",
+    "email": "ahmad@dosen.com",
+    "maxSks": 15
+  },
+  {
+    "id": "dsn-6",
+    "nidn": "00334455",
+    "nama": "Dr. Suryani",
+    "email": "suryani@dosen.com",
+    "maxSks": 12
+  },
+  {
+    "id": "dsn-7",
+    "nidn": "00556677",
+    "nama": "Dr. Eko Prasetyo",
+    "email": "eko@dosen.com",
+    "maxSks": 12
+  },
+  {
+    "id": "dsn-8",
+    "nidn": "00667788",
+    "nama": "Prof. Diah Retno",
+    "email": "diah@dosen.com",
+    "maxSks": 15
+  },
+  {
+    "id": "dsn-9",
+    "nidn": "00990011",
+    "nama": "Dr. Rudi Santosa",
+    "email": "rudi@dosen.com",
+    "maxSks": 9
+  },
+  {
+    "id": "dsn-10",
+    "nidn": "00881122",
+    "nama": "Dr. Hana Lestari",
+    "email": "hana@dosen.com",
+    "maxSks": 12
+  },
+  {
+    "id": "dsn-11",
+    "nidn": "01010101",
+    "nama": "Dr. Wahyu Nugroho",
+    "email": "wahyu@dosen.com",
+    "maxSks": 9
+  },
+  {
+    "id": "dsn-12",
+    "nidn": "01234567",
+    "nama": "Prof. Indah Permatasari",
+    "email": "indah@dosen.com",
+    "maxSks": 15
+  }
+]

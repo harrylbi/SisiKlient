@@ -1,8 +1,6 @@
-// src/Context/AuthContext.jsx
-
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { login as loginApi } from "../Utils/Apis/AuthApis"; // pakai login dari Apis
+import { login as loginApi } from "../Utils/Apis/AuthApis";
 
 const AuthContext = createContext();
 
@@ -13,11 +11,15 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
+    console.log("🟡 LocalStorage user (raw):", storedUser); // debug
+
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
+        console.log("🟢 Parsed user:", parsedUser); // debug
         setUser(parsedUser);
-      } catch {
+      } catch (error) {
+        console.error("Gagal parse user dari localStorage:", error);
         localStorage.removeItem("user");
       }
     }
@@ -27,23 +29,29 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const safeUser = await loginApi(email, password);
-      if (safeUser) {
-        setUser(safeUser);
-        localStorage.setItem("user", JSON.stringify(safeUser));
-        return safeUser;
-      } else {
+      if (!safeUser) {
         throw new Error("Login gagal. User tidak ditemukan.");
       }
+
+      console.log("✅ Login berhasil, menyimpan user ke localStorage:", safeUser); // debug
+      setUser(safeUser);
+      localStorage.setItem("user", JSON.stringify(safeUser));
+      return safeUser;
     } catch (error) {
+      console.error("Login error:", error);
       throw error;
     }
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
+    console.log("🚪 Logout, menghapus user dari localStorage"); // debug
     setUser(null);
-    navigate("/login");
+    localStorage.removeItem("user");
+    navigate("/login", { replace: true });
   };
+
+  const canAccess = (permission) => user?.permissions?.includes(permission);
+  const hasRole = (role) => user?.role === role;
 
   return (
     <AuthContext.Provider
@@ -53,9 +61,11 @@ export const AuthProvider = ({ children }) => {
         isLoggedIn: !!user,
         login,
         logout,
+        canAccess,
+        hasRole,
       }}
     >
-      {children}
+      {!isLoading && children}
     </AuthContext.Provider>
   );
 };

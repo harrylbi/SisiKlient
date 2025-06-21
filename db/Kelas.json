@@ -1,0 +1,14 @@
+[
+  {
+    "id": "kelas-1",
+    "matakuliahId": "mk-1",
+    "dosenId": "dsn-1",
+    "mahasiswaIds": ["mhs-1", "mhs-2"]
+  },
+  {
+    "id": "kelas-2",
+    "matakuliahId": "mk-2",
+    "dosenId": "dsn-2",
+    "mahasiswaIds": ["mhs-2"]
+  }
+]

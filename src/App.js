@@ -1,49 +1,129 @@
-// src/App.js
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
+// Pages
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Mahasiswa from "./pages/Admin/Mahasiswa/Mahasiswa";
 import MahasiswaDetail from "./pages/MahasiswaDetail";
-import Dosen from "./pages/Admin/Dosen/Dosen"; // ✅ Tambahkan ini
-import Matakuliah from "./pages/Admin/Matakuliah/Matakuliah"; // 🆕
+import Dosen from "./pages/Admin/Dosen/Dosen";
+import Matakuliah from "./pages/Admin/Matakuliah/Matakuliah";
+import KRS from "./pages/user/KRS";
+import UserRoles from "./pages/Admin/Users/UserRoles";
+import Kelas from "./pages/Admin/Kelas/Kelas";
+import KelasMahasiswa from "./pages/user/KelasMahasiswa";
 
+// Layouts
 import AuthLayout from "./components/templates/AuthLayout";
 import AdminLayout from "./components/templates/AdminLayout";
-import ProtectedRoute from "../src/Routes/PrivateRoute";
 
-import { AuthProvider } from "../src/Context/AuthContext";
+// Guards
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// Context
+import { AuthProvider } from "./Context/AuthContext";
 
 const App = () => {
   return (
     <AuthProvider>
       <Routes>
-        {/* Halaman Login & Register */}
+        {/* ========== AUTH ROUTES ========== */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
 
-        {/* Halaman Admin (Protected) */}
+        {/* ========== DASHBOARD ROUTES ========== */}
         <Route
-          path="/admin"
+          path="/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute role={["admin", "user", "mahasiswa"]}>
               <AdminLayout />
             </ProtectedRoute>
           }
         >
-          <Route index element={<Navigate to="dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="mahasiswa" element={<Mahasiswa />} />
-          <Route path="mahasiswa/:id" element={<MahasiswaDetail />} />
-          <Route path="dosen" element={<Dosen />} /> {/* ✅ Tambahkan ini */}
-          <Route path="matakuliah" element={<Matakuliah />} /> // 
+          {/* Default redirect */}
+          <Route index element={<Navigate to="home" replace />} />
+
+          {/* ===== ADMIN ONLY ROUTES ===== */}
+          <Route
+            path="home"
+            element={
+              <ProtectedRoute role="admin">
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="mahasiswa"
+            element={
+              <ProtectedRoute role="admin">
+                <Mahasiswa />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="mahasiswa/:id"
+            element={
+              <ProtectedRoute role="admin">
+                <MahasiswaDetail />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="dosen"
+            element={
+              <ProtectedRoute role="admin">
+                <Dosen />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="matakuliah"
+            element={
+              <ProtectedRoute role="admin">
+                <Matakuliah />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="users"
+            element={
+              <ProtectedRoute role="admin">
+                <UserRoles />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="kelas"
+            element={
+              <ProtectedRoute role="admin">
+                <Kelas />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* ===== USER / MAHASISWA ===== */}
+          <Route
+            path="krs"
+            element={
+              <ProtectedRoute role={["user", "mahasiswa"]}>
+                <KRS />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="kelas-saya"
+            element={
+              <ProtectedRoute role={["user", "mahasiswa"]}>
+                <KelasMahasiswa />
+              </ProtectedRoute>
+            }
+          />
         </Route>
 
-        {/* Fallback */}
+        {/* ========== CATCH-ALL ROUTE ========== */}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </AuthProvider>
