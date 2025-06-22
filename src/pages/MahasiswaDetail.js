@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Button from "../components/atoms/Button";
-
 import { getMahasiswa } from "../Utils/Apis/MahasiswaApi.jsx";
 import { toastError } from "../Utils/Helpers/ToastHelpers.jsx";
 
@@ -12,11 +11,7 @@ const MahasiswaDetail = () => {
   const [mahasiswa, setMahasiswa] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchMahasiswa();
-  }, [id]);
-
-  const fetchMahasiswa = async () => {
+  const fetchMahasiswa = useCallback(async () => {
     try {
       const res = await getMahasiswa(id);
       setMahasiswa(res.data);
@@ -25,7 +20,11 @@ const MahasiswaDetail = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchMahasiswa();
+  }, [fetchMahasiswa]);
 
   if (loading) {
     return <p className="text-center">Memuat data...</p>;

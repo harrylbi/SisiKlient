@@ -15,39 +15,36 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setIsLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  try {
-    const user = await authLogin(form.email, form.password);
-    toast.success("Login berhasil!");
+    try {
+      const user = await authLogin(form.email, form.password);
+      toast.success("Login berhasil!");
 
-    setTimeout(() => {
-      // ✅ Arahkan sesuai role dan sesuai struktur route App.js
-      if (user.role === "admin") {
-        navigate("/dashboard/home");
-      } else if (user.role === "user" || user.role === "mahasiswa") {
-        navigate("/dashboard/krs");
-      } else {
-        navigate("/unauthorized");
-      }
-    }, 1500);
-  } catch (err) {
-    toast.error(err.message || "Login gagal");
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+      setTimeout(() => {
+        if (user.role === "admin") {
+          navigate("/dashboard/home");
+        } else if (user.role === "user" || user.role === "mahasiswa") {
+          navigate("/dashboard/krs");
+        } else {
+          navigate("/unauthorized");
+        }
+      }, 1500);
+    } catch (err) {
+      toast.error(err.message || "Login gagal");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+      <div className="bg-white p-8 border-4 border-black rounded-lg shadow-[4px_4px_0px_rgba(0,0,0,1)] w-full max-w-sm">
+        <h2 className="text-3xl font-black mb-6 text-center text-black">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block font-semibold mb-1">
+            <label htmlFor="email" className="block font-bold mb-1 text-black">
               Email
             </label>
             <input
@@ -55,13 +52,13 @@ const handleSubmit = async (e) => {
               name="email"
               value={form.email}
               onChange={handleChange}
-              className="w-full border px-3 py-2 rounded-md"
+              className="w-full border-2 border-black px-3 py-2 rounded-md text-black bg-white"
               placeholder="Masukkan email"
               required
             />
           </div>
           <div>
-            <label htmlFor="password" className="block font-semibold mb-1">
+            <label htmlFor="password" className="block font-bold mb-1 text-black">
               Password
             </label>
             <input
@@ -69,7 +66,7 @@ const handleSubmit = async (e) => {
               name="password"
               value={form.password}
               onChange={handleChange}
-              className="w-full border px-3 py-2 rounded-md"
+              className="w-full border-2 border-black px-3 py-2 rounded-md text-black bg-white"
               placeholder="Masukkan password"
               required
             />
@@ -77,14 +74,14 @@ const handleSubmit = async (e) => {
           <button
             type="submit"
             disabled={isLoading}
-            className={`w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex justify-center items-center ${
+            className={`w-full bg-yellow-300 border-2 border-black text-black font-bold py-2 rounded-md shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:bg-yellow-400 transition flex justify-center items-center ${
               isLoading ? "opacity-70 cursor-not-allowed" : ""
             }`}
           >
             {isLoading ? (
               <>
                 <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-black"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -114,15 +111,15 @@ const handleSubmit = async (e) => {
         <ToastContainer position="top-center" autoClose={3000} />
 
         <div className="text-center mt-4">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-black">
             Belum punya akun?{" "}
-            <Link to="/register" className="text-blue-600 hover:underline">
+            <Link to="/register" className="text-blue-800 font-bold underline">
               Daftar sekarang
             </Link>
           </p>
         </div>
       </div>
-    </div>
+    
   );
 };
 

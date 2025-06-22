@@ -1,3 +1,5 @@
+// SIDEBAR COMPONENT (Sidebar.js) ==> src/components/organisms/Sidebar.js
+
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
@@ -7,16 +9,16 @@ const Sidebar = () => {
 
   const menuClass = ({ isActive }) =>
     isActive
-      ? "flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded"
-      : "flex items-center gap-2 hover:bg-blue-500 hover:text-white px-4 py-2 rounded";
+      ? "flex items-center gap-2 bg-yellow-300 text-black px-4 py-2 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+      : "flex items-center gap-2 bg-white text-black hover:bg-yellow-200 px-4 py-2 border-2 border-black";
 
   return (
-    <aside className="w-64 bg-blue-800 text-white p-4 min-h-screen">
-      <h2 className="text-2xl font-bold mb-8 text-white">
+    <aside className="w-64 bg-yellow-100 text-black p-6 min-h-screen border-r-4 border-black shadow-[4px_0px_0px_rgba(0,0,0,1)]">
+      <h2 className="text-2xl font-extrabold uppercase mb-8 border-b-4 border-black pb-2">
         {user?.role === "admin" ? "Admin Panel" : "Mahasiswa Portal"}
       </h2>
 
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-3">
         {/* ===== ADMIN MENU ===== */}
         {user?.role === "admin" && (
           <>

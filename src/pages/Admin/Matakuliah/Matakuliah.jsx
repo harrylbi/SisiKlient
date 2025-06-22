@@ -1,8 +1,6 @@
-// src/pages/Admin/Matakuliah/Matakuliah.jsx
 import React, { useState } from "react";
 import Button from "../../../components/atoms/Button";
 import { ToastContainer } from "react-toastify";
-
 import {
   toastSuccess,
   toastError,
@@ -11,7 +9,6 @@ import {
   confirmDelete,
   confirmUpdate,
 } from "../../../Utils/Helpers/SwalHelpers";
-
 import { useMatakuliah } from "../../../Utils/hooks/useMatakuliah";
 import ModalMatakuliah from "./ModalMatakuliah";
 
@@ -40,7 +37,6 @@ const Matakuliah = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!form.kode || !form.nama) {
       toastError("Kode dan Nama wajib diisi");
       return;
@@ -51,19 +47,13 @@ const Matakuliah = () => {
         confirmUpdate(async () => {
           await ubahMatakuliah.mutateAsync({
             id: form.id,
-            data: {
-              kode: form.kode,
-              nama: form.nama,
-            },
+            data: { kode: form.kode, nama: form.nama },
           });
           toastSuccess("Berhasil diperbarui");
           resetForm();
         });
       } else {
-        await tambahMatakuliah.mutateAsync({
-          kode: form.kode,
-          nama: form.nama,
-        });
+        await tambahMatakuliah.mutateAsync({ kode: form.kode, nama: form.nama });
         toastSuccess("Berhasil ditambahkan");
         resetForm();
       }
@@ -84,11 +74,11 @@ const Matakuliah = () => {
   };
 
   return (
-    <div className="p-4 bg-white rounded shadow">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Daftar Matakuliah</h2>
+    <div className="p-6 bg-white border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] rounded-lg">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold text-black">📘 Daftar Matakuliah</h2>
         <Button
-          className="bg-green-600 hover:bg-green-700"
+          className="bg-green-300 text-black font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)]"
           onClick={() => {
             resetForm();
             setIsModalOpen(true);
@@ -99,35 +89,35 @@ const Matakuliah = () => {
       </div>
 
       {matakuliahQuery.isLoading ? (
-        <p>Loading...</p>
+        <p className="text-gray-700 font-semibold">Loading...</p>
       ) : matakuliahQuery.isError ? (
-        <p>Gagal memuat data</p>
+        <p className="text-red-600 font-semibold">Gagal memuat data</p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {matakuliahQuery.data.map((mk) => (
             <li
               key={mk.id}
-              className="flex justify-between items-center border-b pb-2"
+              className="flex justify-between items-center p-4 border-2 border-black bg-yellow-200 shadow-[2px_2px_0px_rgba(0,0,0,1)]"
             >
-              <span>
+              <span className="text-black font-bold">
                 {mk.kode} - {mk.nama}
               </span>
               <div className="space-x-2">
                 <Button
-                  className="bg-yellow-500"
+                  className="bg-yellow-300 hover:bg-yellow-400 text-black border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)]"
                   onClick={() => {
                     setForm(mk);
                     setIsEdit(true);
                     setIsModalOpen(true);
                   }}
                 >
-                  Edit
+                  ✏️ Edit
                 </Button>
                 <Button
-                  className="bg-red-600"
+                  className="bg-red-400 hover:bg-red-500 text-black border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)]"
                   onClick={() => handleDelete(mk.id)}
                 >
-                  Hapus
+                  🗑️ Hapus
                 </Button>
               </div>
             </li>

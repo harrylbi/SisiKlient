@@ -49,38 +49,38 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-white shadow rounded-lg p-6 max-w-5xl mx-auto mt-10">
-      <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
-      <p className="mb-6 text-gray-600">
-        Selamat datang, <span className="font-semibold">{user?.name}</span>!
+    <div className="bg-yellow-100 border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)] p-6 max-w-5xl mx-auto mt-10 rounded-lg">
+      <h1 className="text-4xl font-extrabold mb-4 tracking-wider text-black">📊 DASHBOARD</h1>
+      <p className="mb-6 text-lg font-mono text-black">
+        Selamat datang, <span className="font-bold underline">{user?.name}</span>!
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <DashboardCard
           title="Mahasiswa"
           value={stats.mahasiswa}
-          color="bg-blue-100"
+          color="bg-blue-300"
           icon="🎓"
           onClick={() => handleNavigate("mahasiswa")}
         />
         <DashboardCard
           title="Dosen"
           value={stats.dosen}
-          color="bg-green-100"
+          color="bg-green-300"
           icon="👨‍🏫"
           onClick={() => handleNavigate("dosen")}
         />
         <DashboardCard
           title="Matakuliah"
           value={stats.matakuliah}
-          color="bg-yellow-100"
+          color="bg-red-300"
           icon="📘"
           onClick={() => handleNavigate("matakuliah")}
         />
         <DashboardCard
           title="Users"
           value={stats.users}
-          color="bg-purple-100"
+          color="bg-purple-300"
           icon="🧑‍💼"
           onClick={() => handleNavigate("users")}
         />
@@ -92,11 +92,11 @@ const Dashboard = () => {
 const DashboardCard = ({ title, value, color, icon, onClick }) => (
   <div
     onClick={onClick}
-    className={`p-4 rounded shadow hover:shadow-lg transition cursor-pointer ${color}`}
+    className={`p-4 cursor-pointer border-4 border-black ${color} shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:brightness-110 transition`}
   >
-    <div className="text-4xl mb-2">{icon}</div>
-    <h2 className="text-lg font-semibold">{title}</h2>
-    <p className="text-2xl font-bold">{value}</p>
+    <div className="text-5xl mb-3">{icon}</div>
+    <h2 className="text-xl font-bold tracking-wide text-black">{title}</h2>
+    <p className="text-3xl font-black text-black">{value}</p>
   </div>
 );
 
