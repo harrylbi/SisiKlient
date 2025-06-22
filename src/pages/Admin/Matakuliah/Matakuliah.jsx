@@ -1,3 +1,4 @@
+// src/pages/Admin/Matakuliah/Matakuliah.jsx
 import React, { useState } from "react";
 import Button from "../../../components/atoms/Button";
 import { ToastContainer } from "react-toastify";
@@ -12,10 +13,12 @@ import {
 } from "../../../Utils/Helpers/SwalHelpers";
 
 import { useMatakuliah } from "../../../Utils/hooks/useMatakuliah";
+import ModalMatakuliah from "./ModalMatakuliah";
 
 const Matakuliah = () => {
   const [form, setForm] = useState({ id: "", kode: "", nama: "" });
   const [isEdit, setIsEdit] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     matakuliahQuery,
@@ -27,6 +30,7 @@ const Matakuliah = () => {
   const resetForm = () => {
     setForm({ id: "", kode: "", nama: "" });
     setIsEdit(false);
+    setIsModalOpen(false);
   };
 
   const handleChange = (e) => {
@@ -81,29 +85,18 @@ const Matakuliah = () => {
 
   return (
     <div className="p-4 bg-white rounded shadow">
-      <h2 className="text-xl font-bold mb-4">Daftar Matakuliah</h2>
-
-      <form onSubmit={handleSubmit} className="mb-4 space-y-2">
-        <input
-          type="text"
-          name="kode"
-          value={form.kode}
-          onChange={handleChange}
-          placeholder="Kode"
-          className="border p-2 w-full"
-        />
-        <input
-          type="text"
-          name="nama"
-          value={form.nama}
-          onChange={handleChange}
-          placeholder="Nama"
-          className="border p-2 w-full"
-        />
-        <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
-          {isEdit ? "Update" : "Tambah"}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold">Daftar Matakuliah</h2>
+        <Button
+          className="bg-green-600 hover:bg-green-700"
+          onClick={() => {
+            resetForm();
+            setIsModalOpen(true);
+          }}
+        >
+          + Tambah Matakuliah
         </Button>
-      </form>
+      </div>
 
       {matakuliahQuery.isLoading ? (
         <p>Loading...</p>
@@ -125,6 +118,7 @@ const Matakuliah = () => {
                   onClick={() => {
                     setForm(mk);
                     setIsEdit(true);
+                    setIsModalOpen(true);
                   }}
                 >
                   Edit
@@ -140,6 +134,15 @@ const Matakuliah = () => {
           ))}
         </ul>
       )}
+
+      <ModalMatakuliah
+        isOpen={isModalOpen}
+        isEdit={isEdit}
+        form={form}
+        onChange={handleChange}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleSubmit}
+      />
 
       <ToastContainer position="top-right" autoClose={3000} />
     </div>

@@ -79,6 +79,32 @@
       "mahasiswaIds": [
         "mhs-2"
       ]
+    },
+    {
+      "id": "kelas-1750598282668",
+      "matakuliahId": "mk-12",
+      "dosenId": "dsn-11",
+      "mahasiswaIds": [
+        "mhs-2",
+        "mhs-1"
+      ]
+    },
+    {
+      "id": "kelas-1750599285174",
+      "matakuliahId": "mk-11",
+      "dosenId": "dsn-11",
+      "mahasiswaIds": [
+        "mhs-1"
+      ]
+    },
+    {
+      "id": "kelas-1750599965291",
+      "matakuliahId": "mk-18",
+      "dosenId": "dsn-12",
+      "mahasiswaIds": [
+        "mhs-1",
+        "mhs-2"
+      ]
     }
   ],
   "mahasiswa": [
