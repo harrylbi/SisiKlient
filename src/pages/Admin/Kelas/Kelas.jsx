@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import {
+  useKelasData,
+  useMatakuliahData,
+  useDosenData,
+  useMahasiswaData,
+  useCreateKelas,
+  useUpdateKelas,
+  useDeleteKelas,
+} from "../../../Utils/hooks/useKelas";
 
 const Kelas = () => {
-  const [kelas, setKelas] = useState([]);
-  const [matakuliah, setMatakuliah] = useState([]);
-  const [dosen, setDosen] = useState([]);
-  const [mahasiswa, setMahasiswa] = useState([]);
+  const { data: kelas = [] } = useKelasData();
+  const { data: matakuliah = [] } = useMatakuliahData();
+  const { data: dosen = [] } = useDosenData();
+  const { data: mahasiswa = [] } = useMahasiswaData();
+
+  const createKelas = useCreateKelas();
+  const updateKelas = useUpdateKelas();
+  const deleteKelas = useDeleteKelas();
+
   const [form, setForm] = useState({
     id: "",
     matakuliahId: "",
@@ -15,112 +28,74 @@ const Kelas = () => {
   const [message, setMessage] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
-  const fetchAll = async () => {
-    const [resKelas, resMataKuliah, resDosen, resMahasiswa] = await Promise.all([
-      axios.get("http://localhost:3001/kelas"),
-      axios.get("http://localhost:3001/matakuliah"),
-      axios.get("http://localhost:3001/dosen"),
-      axios.get("http://localhost:3001/mahasiswa")
-    ]);
-
-    setKelas(resKelas.data);
-    setMatakuliah(resMataKuliah.data);
-    setDosen(resDosen.data);
-    setMahasiswa(resMahasiswa.data);
+  const resetForm = () => {
+    setForm({ id: "", matakuliahId: "", dosenId: "", mahasiswaIds: [] });
+    setIsEditing(false);
+    setMessage("");
   };
-
-  useEffect(() => {
-    fetchAll();
-  }, []);
 
   const getMatakuliahName = (id) => matakuliah.find((m) => m.id === id)?.nama || "-";
   const getDosenName = (id) => dosen.find((d) => d.id === id)?.nama || "-";
   const getMahasiswaNames = (ids) =>
     ids.map((id) => mahasiswa.find((m) => m.id === id)?.nama || "-").join(", ");
 
-  const getTotalSKSForMahasiswa = (mhsId) => {
-    const kelasMhs = kelas.filter(k => k.mahasiswaIds.includes(mhsId));
-    return kelasMhs.reduce((sum, kls) => {
-      const matkul = matakuliah.find(m => m.id === kls.matakuliahId);
-      return sum + (matkul?.sks || 0);
-    }, 0);
-  };
+  const getTotalSKSFor = (predicate) =>
+    kelas
+      .filter(predicate)
+      .reduce((sum, k) => {
+        const mk = matakuliah.find((m) => m.id === k.matakuliahId);
+        return sum + (mk?.sks || 0);
+      }, 0);
 
-  const getTotalSKSForDosen = (dsnId) => {
-    const kelasDosen = kelas.filter(k => k.dosenId === dsnId);
-    return kelasDosen.reduce((sum, kls) => {
-      const matkul = matakuliah.find(m => m.id === kls.matakuliahId);
-      return sum + (matkul?.sks || 0);
-    }, 0);
+  const handleCheckboxChange = (id) => {
+    setForm((prev) => ({
+      ...prev,
+      mahasiswaIds: prev.mahasiswaIds.includes(id)
+        ? prev.mahasiswaIds.filter((m) => m !== id)
+        : [...prev.mahasiswaIds, id],
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
+    const mk = matakuliah.find((m) => m.id === form.matakuliahId);
+    const dsn = dosen.find((d) => d.id === form.dosenId);
 
-    const matkul = matakuliah.find(m => m.id === form.matakuliahId);
-    const dosenTerpilih = dosen.find(d => d.id === form.dosenId);
+    if (!mk || !dsn) return setMessage("Mata kuliah dan dosen harus dipilih.");
 
-    if (!matkul || !dosenTerpilih) {
-      setMessage("Pilih mata kuliah dan dosen terlebih dahulu.");
-      return;
+    if (!isEditing && getTotalSKSFor((k) => k.dosenId === dsn.id) + mk.sks > dsn.maxSks) {
+      return setMessage(`Dosen ${dsn.nama} melebihi batas SKS`);
     }
 
-    const totalSksDosen = getTotalSKSForDosen(dosenTerpilih.id);
-    if (!isEditing && (totalSksDosen + matkul.sks) > dosenTerpilih.maxSks) {
-      setMessage(`Dosen ${dosenTerpilih.nama} melebihi batas SKS`);
-      return;
-    }
-
-    for (const mhsId of form.mahasiswaIds) {
-      const mhs = mahasiswa.find(m => m.id === mhsId);
-      const totalSksMhs = getTotalSKSForMahasiswa(mhsId);
+    for (const mId of form.mahasiswaIds) {
+      const mhs = mahasiswa.find((m) => m.id === mId);
+      const total = getTotalSKSFor((k) => k.mahasiswaIds.includes(mId));
       const sudahAmbil = kelas.some(
-        (k) => k.mahasiswaIds.includes(mhsId) && k.matakuliahId === matkul.id && k.id !== form.id
+        (k) => k.mahasiswaIds.includes(mId) && k.matakuliahId === mk.id && k.id !== form.id
       );
-      if (sudahAmbil) {
-        setMessage(`Mahasiswa ${mhs.nama} sudah mengambil mata kuliah ini.`);
-        return;
-      }
-      if (!isEditing && (totalSksMhs + matkul.sks) > mhs.maxSks) {
-        setMessage(`Mahasiswa ${mhs.nama} melebihi batas SKS`);
-        return;
-      }
+      if (sudahAmbil) return setMessage(`${mhs?.nama} sudah ambil mata kuliah ini.`);
+      if (!isEditing && total + mk.sks > mhs.maxSks)
+        return setMessage(`${mhs?.nama} melebihi batas SKS.`);
     }
 
     if (isEditing) {
-      await axios.put(`http://localhost:3001/kelas/${form.id}`, form);
-      setIsEditing(false);
+      await updateKelas.mutateAsync({ id: form.id, data: form });
     } else {
-      await axios.post("http://localhost:3001/kelas", {
-        ...form,
-        id: `kelas-${Date.now()}`,
-      });
+      await createKelas.mutateAsync({ ...form, id: `kelas-${Date.now()}` });
     }
 
-    setForm({ id: "", matakuliahId: "", dosenId: "", mahasiswaIds: [] });
-    fetchAll();
+    resetForm();
     setMessage("Kelas berhasil disimpan.");
   };
 
-  const handleCheckboxChange = (id) => {
-    setForm((prev) => {
-      const updated = prev.mahasiswaIds.includes(id)
-        ? prev.mahasiswaIds.filter((m) => m !== id)
-        : [...prev.mahasiswaIds, id];
-      return { ...prev, mahasiswaIds: updated };
-    });
-  };
-
-  const handleEdit = (kelasItem) => {
-    setForm(kelasItem);
+  const handleEdit = (data) => {
+    setForm(data);
     setIsEditing(true);
-    setMessage("");
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3001/kelas/${id}`);
-    fetchAll();
+    await deleteKelas.mutateAsync(id);
+    resetForm();
     setMessage("Kelas berhasil dihapus.");
   };
 
@@ -131,58 +106,50 @@ const Kelas = () => {
       <form onSubmit={handleSubmit} className="bg-gray-100 p-4 rounded shadow mb-6">
         <h3 className="font-semibold mb-2">{isEditing ? "Edit" : "Tambah"} Kelas</h3>
 
-        <label className="block mb-2">
-          Mata Kuliah:
-          <select
-            className="block w-full p-2 mt-1"
-            value={form.matakuliahId}
-            onChange={(e) => setForm({ ...form, matakuliahId: e.target.value })}
-            required
-          >
-            <option value="">-- Pilih --</option>
-            {matakuliah.map((m) => (
-              <option key={m.id} value={m.id}>{m.nama} ({m.sks} SKS)</option>
-            ))}
-          </select>
-        </label>
+        <select
+          className="block w-full p-2 mb-2"
+          value={form.matakuliahId}
+          onChange={(e) => setForm({ ...form, matakuliahId: e.target.value })}
+        >
+          <option value="">-- Pilih Mata Kuliah --</option>
+          {matakuliah.map((m) => (
+            <option key={m.id} value={m.id}>
+              {m.nama} ({m.sks} SKS)
+            </option>
+          ))}
+        </select>
 
-        <label className="block mb-2">
-          Dosen:
-          <select
-            className="block w-full p-2 mt-1"
-            value={form.dosenId}
-            onChange={(e) => setForm({ ...form, dosenId: e.target.value })}
-            required
-          >
-            <option value="">-- Pilih --</option>
-            {dosen.map((d) => (
-              <option key={d.id} value={d.id}>
-                {d.nama} (SKS: {getTotalSKSForDosen(d.id)}/{d.maxSks})
-              </option>
-            ))}
-          </select>
-        </label>
+        <select
+          className="block w-full p-2 mb-2"
+          value={form.dosenId}
+          onChange={(e) => setForm({ ...form, dosenId: e.target.value })}
+        >
+          <option value="">-- Pilih Dosen --</option>
+          {dosen.map((d) => (
+            <option key={d.id} value={d.id}>
+              {d.nama} (SKS: {getTotalSKSFor((k) => k.dosenId === d.id)}/{d.maxSks})
+            </option>
+          ))}
+        </select>
 
-        <label className="block mb-2">
-          Mahasiswa:
-          <div className="grid grid-cols-2 gap-2">
-            {mahasiswa.map((m) => (
-              <label key={m.id} className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={form.mahasiswaIds.includes(m.id)}
-                  onChange={() => handleCheckboxChange(m.id)}
-                />
-                <span className="ml-2">
-                  {m.nama} (SKS: {getTotalSKSForMahasiswa(m.id)}/{m.maxSks})
-                </span>
-              </label>
-            ))}
-          </div>
-        </label>
+        <div className="grid grid-cols-2 gap-2 mb-2">
+          {mahasiswa.map((m) => (
+            <label key={m.id} className="flex items-center">
+              <input
+                type="checkbox"
+                checked={form.mahasiswaIds.includes(m.id)}
+                onChange={() => handleCheckboxChange(m.id)}
+              />
+              <span className="ml-2">
+                {m.nama} (SKS: {getTotalSKSFor((k) => k.mahasiswaIds.includes(m.id))}/{m.maxSks})
+              </span>
+            </label>
+          ))}
+        </div>
 
         {message && <p className="text-red-600 mt-2">{message}</p>}
-        <button type="submit" className="mt-4 bg-blue-600 text-white px-4 py-2 rounded">
+
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
           {isEditing ? "Perbarui" : "Simpan"} Kelas
         </button>
       </form>

@@ -3,7 +3,7 @@
     {
       "id": "dsn-3",
       "nidn": "00778899",
-      "nama": "Dr. Budi Hartono",
+      "nama": "Dr. Budi Hartonoo",
       "email": "budi.hartono@dosen.com",
       "maxSks": 12
     },
@@ -83,11 +83,10 @@
   ],
   "mahasiswa": [
     {
-      "id": "mhs-1",
       "nim": "12345678",
-      "nama": "Budi Santoso",
+      "nama": "Budi Santoso0",
       "status": true,
-      "maxSks": 24
+      "id": "mhs-1"
     },
     {
       "id": "mhs-2",

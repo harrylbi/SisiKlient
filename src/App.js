@@ -21,112 +21,107 @@ import AdminLayout from "./components/templates/AdminLayout";
 // Guards
 import ProtectedRoute from "./components/ProtectedRoute";
 
-// Context
-import { AuthProvider } from "./Context/AuthContext";
-
 const App = () => {
   return (
-    <AuthProvider>
-      <Routes>
-        {/* ========== AUTH ROUTES ========== */}
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Route>
+    <Routes>
+      {/* ========== AUTH ROUTES ========== */}
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Route>
 
-        {/* ========== DASHBOARD ROUTES ========== */}
+      {/* ========== DASHBOARD ROUTES ========== */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute role={["admin", "user", "mahasiswa"]}>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        {/* Default redirect */}
+        <Route index element={<Navigate to="home" replace />} />
+
+        {/* ===== ADMIN ONLY ROUTES ===== */}
         <Route
-          path="/dashboard"
+          path="home"
           element={
-            <ProtectedRoute role={["admin", "user", "mahasiswa"]}>
-              <AdminLayout />
+            <ProtectedRoute role="admin">
+              <Dashboard />
             </ProtectedRoute>
           }
-        >
-          {/* Default redirect */}
-          <Route index element={<Navigate to="home" replace />} />
+        />
+        <Route
+          path="mahasiswa"
+          element={
+            <ProtectedRoute role="admin">
+              <Mahasiswa />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="mahasiswa/:id"
+          element={
+            <ProtectedRoute role="admin">
+              <MahasiswaDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="dosen"
+          element={
+            <ProtectedRoute role="admin">
+              <Dosen />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="matakuliah"
+          element={
+            <ProtectedRoute role="admin">
+              <Matakuliah />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="users"
+          element={
+            <ProtectedRoute role="admin">
+              <UserRoles />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="kelas"
+          element={
+            <ProtectedRoute role="admin">
+              <Kelas />
+            </ProtectedRoute>
+          }
+        />
 
-          {/* ===== ADMIN ONLY ROUTES ===== */}
-          <Route
-            path="home"
-            element={
-              <ProtectedRoute role="admin">
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="mahasiswa"
-            element={
-              <ProtectedRoute role="admin">
-                <Mahasiswa />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="mahasiswa/:id"
-            element={
-              <ProtectedRoute role="admin">
-                <MahasiswaDetail />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="dosen"
-            element={
-              <ProtectedRoute role="admin">
-                <Dosen />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="matakuliah"
-            element={
-              <ProtectedRoute role="admin">
-                <Matakuliah />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="users"
-            element={
-              <ProtectedRoute role="admin">
-                <UserRoles />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="kelas"
-            element={
-              <ProtectedRoute role="admin">
-                <Kelas />
-              </ProtectedRoute>
-            }
-          />
+        {/* ===== USER / MAHASISWA ===== */}
+        <Route
+          path="krs"
+          element={
+            <ProtectedRoute role={["user", "mahasiswa"]}>
+              <KRS />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="kelas-saya"
+          element={
+            <ProtectedRoute role={["user", "mahasiswa"]}>
+              <KelasMahasiswa />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
 
-          {/* ===== USER / MAHASISWA ===== */}
-          <Route
-            path="krs"
-            element={
-              <ProtectedRoute role={["user", "mahasiswa"]}>
-                <KRS />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="kelas-saya"
-            element={
-              <ProtectedRoute role={["user", "mahasiswa"]}>
-                <KelasMahasiswa />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
-
-        {/* ========== CATCH-ALL ROUTE ========== */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
-    </AuthProvider>
+      {/* ========== CATCH-ALL ROUTE ========== */}
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
   );
 };
 
